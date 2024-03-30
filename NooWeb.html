@@ -280,6 +280,13 @@
     </form>
 
     <div class="movieCategory">
+        <div class="categoryTitle">Phim Hot 2024</div>
+        <div class="movieContainer" id="hotMovies"></div>
+        <button class="PageButton" onclick="prevPage('hotMovies')"><<</button>
+        <button class="PageButton" onclick="nextPage('hotMovies')">>></button>
+    </div>
+
+    <div class="movieCategory">
         <div class="categoryTitle">Phim Việt Nam Chiếu Rạp</div>
         <div class="movieContainer" id="vietnamMovies"></div>
         <!-- Thêm nút lướt cho mục phim Việt Nam -->
@@ -344,6 +351,11 @@
     </div>
 
     <script>
+        var hotMovies = [
+            { title: 'Nữ Hoàng Nước Mắt',image: 'https://data.ibtimes.sg/en/full/73265/queen-of-tears.jpg?w=736'},
+            { title: 'Quật Mộ Trùng Ma',image: 'https://i.mydramalist.com/E5rXW7_4c.jpg'},
+            { title: 'Người Thừa Kế Bất Khả Thi',image: 'https://asianwiki.com/images/e/e0/The_Impossible_Heir-tp1.jpeg'}
+        ];
         var vietnamMovies = [
             { title: 'Bố Già',image: 'https://m.media-amazon.com/images/M/MV5BY2ExMDIwYzAtOWE4YS00ZThkLTk1MDQtZTQ4YjViNzNlODk5XkEyXkFqcGdeQXVyNDc0Njc1NTY@._V1_.jpg'},
             { title: 'Gái Già Lắm Chiêu 3',image: 'https://bloganchoi.com/wp-content/uploads/2020/01/gai-gia-lam-chieu-3-poster-1.jpg'},
@@ -362,6 +374,9 @@
             { title: 'Tiệc Trăng Máu',image: 'https://bloganchoi.com/wp-content/uploads/2020/10/phim-viet-chieu-rap-2020-5.jpg'}
         ];
         var koreaMovies = [
+            { title: 'Trò Chơi Con Mực',image: 'https://www.ungeek.ph/wp-content/uploads/2021/08/Squid_Game_Key_Visual.jpg'},
+            { title: 'Doona!',image: 'https://kdramadiary.com/wp-content/uploads/2023/09/Doona-teaser-poster.jpg'},
+            { title: 'Vinh Quang Trong Thù Hận 2',image: 'https://bazaarvietnam.vn/wp-content/uploads/2023/02/HBVN-phim-han-tren-netflix-the-glory-2.jpg'},
             { title: 'Chuyện Đời Bác Sĩ',image: 'https://i.pinimg.com/originals/48/1f/ac/481facb28a06b637bc38080b234a1220.jpg'},
             { title: 'Kẻ Huỷ Diệt Gõ Cửa Nhà Tôi',image: 'https://i.pinimg.com/originals/b9/a9/db/b9a9db2e6213d38d348c2c7ee4b9ba28.jpg'},
             { title: 'Thẩm Phán Ác Ma',image: 'https://i.pinimg.com/originals/7a/dd/8c/7add8c4ef81932da37ee52ec60bc502a.jpg'},
@@ -399,12 +414,14 @@
             { title: 'The Boys In The Boat',image: 'https://static.bunnycdn.ru/i/cache/images/e/e5/e553c5ec7eebe229a18e2d89951a8697.jpg'},
             { title: 'The Beekeeper',image: 'https://static.bunnycdn.ru/i/cache/images/5/57/574ea42e26fdaf2c757386e7bc7402ed.jpg'}
         ];
-
+        
+        var currentHotIndex = 0;
         var currentVietnamIndex = 0;
         var currentKoreaIndex = 0;
         var currentChinaIndex = 0;
         var currentUSIndex = 0;
 
+        var hotSearchResult = []
         var vietnamSearchResult = []; 
         var koreaSearchResult = [];   
         var chinaSearchResult = [];
@@ -422,7 +439,7 @@
 
         function searchMovie() {
             var searchI = document.getElementById('searchInput').value.toLowerCase();
-
+            filterAndRenderMovies(searchI, hotMovies, 'hotMovies');
             filterAndRenderMovies(searchI, vietnamMovies, 'vietnamMovies');
             filterAndRenderMovies(searchI, koreaMovies, 'koreaMovies');
             filterAndRenderMovies(searchI, chinaMovies, 'chinaMovies');
@@ -442,7 +459,9 @@
         function renderSearchResult(resultMovies, category) { // Phan biet = the loai, id ca 2 trung
             var movieContainer;
             // xac dinh dung vi tri tren giao dien
-            if (category === 'vietnamMovies') { 
+            if (category === 'hotMovies') { 
+                movieContainer = document.getElementById('hotMovies');
+            } else if (category === 'vietnamMovies') { 
                 movieContainer = document.getElementById('vietnamMovies');
             } else if (category === 'koreaMovies') {
                 movieContainer = document.getElementById('koreaMovies');
@@ -497,7 +516,11 @@
             var currentIndex;
             var resultMovies;
 
-            if (category === 'vietnamMovies') {
+            if (category === 'hotMovies') {
+                currentIndex = currentHotIndex;
+                resultMovies = hotSearchResult.length > 0 ? hotSearchResult : hotMovies;
+                currentHotIndex += 3;
+            } else if (category === 'vietnamMovies') {
                 currentIndex = currentVietnamIndex; // start at 0
                 resultMovies = vietnamSearchResult.length > 0 ? vietnamSearchResult : vietnamMovies; //chon mang
                 currentVietnamIndex += 3;                           
@@ -523,10 +546,14 @@
             var currentIndex;
             var resultMovies;
 
-            if (category === 'vietnamMovies') {
+            if (category === 'hotMovies') {
+                currentIndex = currentHotIndex;
+                resultMovies = hotSearchResult.length > 0 ? hotSearchResult : hotMovies;
+                currentHotIndex = Math.max(0, currentHotIndex - 3); //index start: 0, 3, 6, 9,...
+            } else if (category === 'vietnamMovies') {
                 currentIndex = currentVietnamIndex;
                 resultMovies = vietnamSearchResult.length > 0 ? vietnamSearchResult : vietnamMovies;
-                currentVietnamIndex = Math.max(0, currentVietnamIndex - 3); //index start: 0, 3, 6, 9,...
+                currentVietnamIndex = Math.max(0, currentVietnamIndex - 3); 
             } else if (category === 'koreaMovies') {
                 currentIndex = currentKoreaIndex;
                 resultMovies = koreaSearchResult.length > 0 ? koreaSearchResult : koreaMovies;
@@ -546,6 +573,7 @@
         }
 
         // Load => hien thi 3 phim
+        renderMovies('hotMovies', currentHotIndex, hotMovies);
         renderMovies('vietnamMovies', currentVietnamIndex, vietnamMovies);
         renderMovies('koreaMovies', currentKoreaIndex, koreaMovies);
         renderMovies('chinaMovies', currentChinaIndex, chinaMovies);
@@ -576,7 +604,6 @@
         }
         //doi bg
         var backgrounds = [
-            'url("https://i.ytimg.com/vi/x0yN2dqhRs8/maxresdefault.jpg")',
             'url("https://i.ytimg.com/vi/IgRJbN88l7E/maxresdefault.jpg")', 
             'url("https://i.ytimg.com/vi/fNE3wgaHr18/maxresdefault.jpg")',
             'url("https://i.ytimg.com/vi/s6CGTzYx5vE/maxresdefault.jpg")',
