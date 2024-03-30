@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dinoflix</title>
+    <style>
+        body {
+            background-image: url('https://static.fptplay.net/static/img/share/video/OTT/VOD/2022/09/07/toi-ac-vo-hinh-16-tap-fpt-play-1662522711376_Landscape.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: serif;
+            color: #ffffff;
+            text-align: center;
+            margin: 20px;
+            transition: background-image 1s ease-in-out;
+        }
+        h1 {
+            font-size: 70px;
+            text-decoration: underline;
+            text-align: left;
+            color:#cb252b;
+            text-shadow: 10px 5px 20px #000000; /*ngang - doc - mo*/
+            font-family: 'Times New Roman', Times, serif;
+            margin-top: 40px;
+            display: inline-block;
+            padding-right: 270px;
+        }
+
+        form {
+            margin-top: 5px;
+            display: inline-block;
+            margin-left: 250px;
+        }
+        /*Thanh tim phim*/
+        .TimKiem{
+            font-size: 25px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .Timphim {
+            width: 300px;
+            padding: 5px;
+            font-size: 20px;
+            border-radius: 10px;
+            margin-bottom: 80px;
+        }
+
+        .submit {
+            background-color: #e44d26;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        fieldset {
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        legend {
+            font-size: 30px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .movieContainer {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin-top: 60px;
+        }
+
+        .movieCard {
+            width: 250px;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .movieCard:hover {
+            transform: scale(1.05);
+        }
+
+        .movieImage {
+            width: 100%;
+            height: 90%;
+            border-radius: 10px; 
+        }
+        .movieTitle {
+            background-color: #e44d26;
+            color: #fff; 
+            border-radius: 10px;
+            padding: 5px; 
+            margin: 0; 
+            cursor: pointer;
+            font-family:'Times New Roman', Times, serif;
+            font-size: 18px;
+            transition: background-color 0.3s; 
+        }
+
+        .movieTitle:hover {
+            background-color: #333; 
+        }
+
+        
+        .PageButton {
+            display: inline-block;
+            margin: 20px auto;
+            background-color: #000000;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            height: 30px;
+            width: 70px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .PageButton:hover {
+            background-color: #333;
+        }
+
+        .movieCategory {
+            margin-top: 20px;
+        }
+
+        .categoryTitle {
+            font-size: 30px;
+            font-family: 'Times New Roman', Times, serif;
+            color:#131313;
+            background-color:#e5e5e5;
+            border-radius: 10px;
+            padding: 5px;
+            width: 25%;
+            text-align: center;
+            margin: auto;
+        }
+        .personalInfo {
+            background-color: rgba(29, 29, 29, 0.7);
+            padding: 20px;
+            margin-top: 50px;
+            height: 20%;
+            text-align: left;
+        }
+
+        .personalInfo input {
+            width: 32.4%;
+            padding: 10px;
+            margin: 0 90px 40px 42px;
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 18px;
+            display: inline-block;
+        }
+        .personalInfo textarea {
+            width: 80%; 
+            padding: 10px;
+            vertical-align: middle; 
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 18px;
+            display: inline-block;
+            padding: 25px 0 10px 5px;
+        }
+        .personalInfo label {
+            font-size: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .feedbackButton {
+            background-color: #000000;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            font-family: 'Times New Roman', Times, serif;
+            width: 60px;
+            height: 50px;
+            margin-left: 10px;
+        }
+
+        .feedbackButton:hover {
+            background-color: #333;
+        }
+
+        .ourInfo {
+            background-color: rgba(29, 29, 29, 0.7);
+            padding: 20px;
+            margin-top: 30px;
+            height: 20%;
+            text-align: left;
+        }
+
+        .ourInfo h2 {
+            font-size: 25px;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .ourInfo p {
+            font-size: 18px;
+            color: #ffffff;
+            line-height: 1.5;
+        }
+
+        .ourInfo a {
+            color: #e44d26;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 22px;
+        }
+
+        .ourInfo a:hover {
+            text-decoration: underline;
+        }
+        #show-hotline-btn {
+            position: fixed;
+            bottom: 15px;
+            width: 100px;
+            right: 20px;
+            z-index: 999;
+            background-color: #00704A;
+            color: #ffffff;
+            padding: 15px 20px;
+            border: 2px solid #000;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 19px;
+            font-family: 'Times New Roman', Times, serif;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        #show-hotline-btn:hover {
+            background-color: #333;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+        }
+        #close-hotline-btn {
+            position: absolute;
+            background-color: #000000;
+            border-radius: 50%; 
+            top: -3px;
+            right: -3px;
+            color: #fff;
+            cursor: pointer;
+            width: 25px;
+            height: 25px; 
+            display: flex;
+            font-size: 15px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #close-hotline-btn:hover {
+            color: #e44d26;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <h1>NooWeb</h1>
+
+    <form onsubmit="searchMovie(); return false;">
+        <em class = "TimKiem">Tìm kiếm:</em>
+        <input type="search" class="Timphim" id="searchInput" placeholder="Bố Già, Lật Mặt,..." oninput="suggestMovies()">
+        <input type="submit" value="Tìm" class="submit">
+        <!--<button type="button" class="submitBtn" onclick="showAllMovies()">Tất cả phim</button> -->
+    </form>
+
+    <div class="movieCategory">
+        <div class="categoryTitle">Phim Việt Nam Chiếu Rạp</div>
+        <div class="movieContainer" id="vietnamMovies"></div>
+        <!-- Thêm nút lướt cho mục phim Việt Nam -->
+        <button class="PageButton" onclick="prevPage('vietnamMovies')"><<</button>
+        <button class="PageButton" onclick="nextPage('vietnamMovies')">>></button>
+    </div>
+
+    <div class="movieCategory">
+        <div class="categoryTitle">Phim Bộ Hàn Quốc</div>
+        <div class="movieContainer" id="koreaMovies"></div>
+        <!-- Thêm nút lướt cho mục phim Hàn Quốc -->
+        <button class="PageButton" onclick="prevPage('koreaMovies')"><<</button>
+        <button class="PageButton" onclick="nextPage('koreaMovies')">>></button>
+    </div>
+
+    <div class="movieCategory">
+        <div class="categoryTitle">Phim Trung Quốc Hot</div>
+        <div class="movieContainer" id="chinaMovies"></div>
+        <!-- Thêm nút lướt cho mục phim Việt Nam -->
+        <button class="PageButton" onclick="prevPage('chinaMovies')"><<</button>
+        <button class="PageButton" onclick="nextPage('chinaMovies')">>></button>
+    </div>
+
+    <div class="movieCategory">
+        <div class="categoryTitle">Phim Mỹ Thời Đại</div>
+        <div class="movieContainer" id="usMovies"></div>
+        <!-- Thêm nút lướt cho mục phim Việt Nam -->
+        <button class="PageButton" onclick="prevPage('usMovies')"><<</button>
+        <button class="PageButton" onclick="nextPage('usMovies')">>></button>
+    </div>
+    
+    <div class="personalInfo">
+        <h2>Thông tin cá nhân</h2>
+        <label for="name">Họ và tên:</label>
+        <input type="text" id="name" name="name" placeholder="Nhập họ và tên">
+    
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email">
+    
+        <label for="feedback">Ý kiến của bạn:</label>
+        <textarea class ="feedback" name="feedback" placeholder="Nhập ý kiến của bạn"></textarea>
+    
+        <button class="feedbackButton" onclick="giveFeedback()">Gửi</button>
+    </div>
+
+    <div class="ourInfo">
+        
+        <h2>Thông tin về chúng tôi</h2>
+        <p>
+            NooWeb là một đội ngũ đam mê về phim và mong muốn mang lại trải nghiệm tuyệt vời cho người xem.<br>
+            Nếu bạn cần liên hệ gấp, hãy nhắn tin với chúng tôi qua địa chỉ email sau:
+            <a href="mailto:tranmyvan6157@gmail.com">nooweb@tdtu.edu.vn</a><br>
+        </p>
+    </div>
+
+    <!-- Thêm vào nơi bạn muốn hiển thị số điện thoại -->
+    <div id="hotline-container">
+        <button id="show-hotline-btn" onclick="showHotline()">Hotline<div id="close-hotline-btn" onclick="closeHotline()">x</div></button>
+        <div id="hotline" style="display: none;">
+            <p>Số điện thoại: 1900-2210 </p>
+        </div>
+    </div>
+
+    <script>
+        var vietnamMovies = [
+            { title: 'Bố Già',image: 'https://m.media-amazon.com/images/M/MV5BY2ExMDIwYzAtOWE4YS00ZThkLTk1MDQtZTQ4YjViNzNlODk5XkEyXkFqcGdeQXVyNDc0Njc1NTY@._V1_.jpg'},
+            { title: 'Gái Già Lắm Chiêu 3',image: 'https://bloganchoi.com/wp-content/uploads/2020/01/gai-gia-lam-chieu-3-poster-1.jpg'},
+            { title: 'Tháng Năm Rực Rỡ',image: 'https://2.bp.blogspot.com/-xViXEVs51FI/Wv_wZvIDW7I/AAAAAAAAAWg/c-D7C5Wnq3UQFom4Hd5PTl-yZVtzK2ohwCLcBGAs/s1600/thang-nam-ruc-ro.jpg'},
+            { title: 'Mắt Biếc',image: 'https://bloganchoi.com/wp-content/uploads/2020/10/phim-viet-chieu-rap-2020-6-696x994.jpg'},
+            { title: 'Cô Ba Sài Gòn',image: 'https://toplist.vn/images/800px/co-ba-sai-gon-186945.jpg'},
+            { title: 'Đất Rừng Phương Nam',image: 'https://images2.thanhnien.vn/528068263637045248/2023/5/9/first-lookposter-1683642029191984245773.jpg'},
+            { title: 'Chàng Vợ Của Em',image: 'https://s1.bloganchoi.com/wp-content/uploads/2019/03/chang-vo-cua-em.jpg'},
+            { title: 'Cua Lại Vợ Bầu',image: 'https://reviewphim.net/wp-content/uploads/2020/02/cua-lai-vo-bau-poster-15475463007651611212162.jpg'},
+            { title: 'Nghề Siêu Dễ',image: 'https://toplist.vn/images/800px/nghe-sieu-de-869239.jpg'},
+            { title: '1990',image: 'https://media.doisongvietnam.vn/u/rootimage/editor/2022/01/20/18/02/w825/3741642654939_8441.jpg'},
+            { title: 'Kẻ Ăn Hồn',image: 'https://tranglamdep.net/wp-content/uploads/2023/11/poster-ke-an-hon.jpg'},
+            { title: 'Lật Mặt: Nhà Có Khách',image: 'https://static1.dienanh.net/upload/202107/4d6599ba-2d7f-4da4-a29e-ce83f4aa50a0.jpg'},
+            { title: 'Lật Mặt: 48h',image: 'https://khenphim.com/wp-content/uploads/2021/04/Lat-Mat-48H_1-poster_KP.jpg'},
+            { title: 'Gái Già Lắm Chiêu V',image: 'https://bazaarvietnam.com/wp-content/uploads/2021/02/gai-gia-lam-chieu-.jpg'},
+            { title: 'Tiệc Trăng Máu',image: 'https://bloganchoi.com/wp-content/uploads/2020/10/phim-viet-chieu-rap-2020-5.jpg'}
+        ];
+        var koreaMovies = [
+            { title: 'Chuyện Đời Bác Sĩ',image: 'https://i.pinimg.com/originals/48/1f/ac/481facb28a06b637bc38080b234a1220.jpg'},
+            { title: 'Kẻ Huỷ Diệt Gõ Cửa Nhà Tôi',image: 'https://i.pinimg.com/originals/b9/a9/db/b9a9db2e6213d38d348c2c7ee4b9ba28.jpg'},
+            { title: 'Thẩm Phán Ác Ma',image: 'https://i.pinimg.com/originals/7a/dd/8c/7add8c4ef81932da37ee52ec60bc502a.jpg'},
+            { title: 'Nữ Thanh Tra Tài Ba',image: 'https://i.pinimg.com/originals/70/85/fc/7085fcc176a4732befef53130ca09d5d.jpg'},
+            { title: 'Hoa Của Quỷ',image: 'https://i.pinimg.com/originals/9c/9c/aa/9c9caa51d942ee470554f31345db47f4.jpg'},
+            { title: 'Nếu Như Yêu',image: 'https://i.pinimg.com/originals/03/fe/c9/03fec95367da8cc07b985c8b8c38002f.jpg'},
+            { title: 'Ngày Mai',image: 'https://i.pinimg.com/originals/67/ed/d2/67edd2e526128c2ec50d1114f1abcc02.jpg'},
+            { title: 'Bác Sĩ Cha',image: 'https://i.pinimg.com/originals/f4/54/e2/f454e2455e178c486b3231e8be942bd3.jpg'},
+            { title: 'Hạnh Phúc',image: 'https://i.pinimg.com/originals/20/39/5b/20395b16adbdac5efc5b13c3536de9d1.jpg'},
+            { title: '2521',image: 'https://i.pinimg.com/originals/b0/57/cc/b057cc95d7839f916ceee5b7d9b58a66.jpg'},
+            { title: 'Hạ Cánh Nơi Anh',image: 'https://i.pinimg.com/originals/fa/cf/fd/facffd892be28a9ce217b16e6107952e.jpg'},
+            { title: 'L.U.C.A',image: 'https://i.pinimg.com/originals/5e/98/dc/5e98dc0de7a2f4de20829acf3e6354f9.jpg'},
+            { title: 'Đối Tác Đáng Nghi',image: 'https://i.pinimg.com/originals/26/07/5f/26075f46b59b9e3ad0241d0a1ecf15d3.jpg'},
+            //{ title: 'Bạn Cùng Phòng Của Tôi Là Gumiho',image: 'https://i.pinimg.com/originals/28/c5/17/28c517c724ac7e1f3f2caaf467b9296a.jpg'}
+        ];
+        var chinaMovies = [
+            { title: 'Born To Fly',image: 'https://static.bunnycdn.ru/i/cache/images/7/77/77a6626234c305d1db4ab0315f381113.jpg'},
+            { title: 'Hachiko',image: 'https://static.bunnycdn.ru/i/cache/images/4/41/41dfa5f986ff51daec1f9ae49b14312b.jpg'},
+            { title: 'Ride On',image: 'https://static.bunnycdn.ru/i/cache/images/0/06/06405823fc551718fdb0178da2c922c0.jpg'},
+            { title: 'Yesterday Once More',image: 'https://static.bunnycdn.ru/i/cache/images/4/49/49689ab59b971c8d76994a66cc7f297a.jpg'},
+            { title: 'Goodbye Monster',image: 'https://static.bunnycdn.ru/i/cache/images/e/ee/ee68003e6b657cccbc0ed61850ade36c.jpg'},
+            { title: 'Dancing Green',image: 'https://static.bunnycdn.ru/i/cache/images/0/0a/0ab0198807120a2eb36db6323f43049b.jpg'},
+            { title: 'All Ears',image: 'https://static.bunnycdn.ru/i/cache/images/a/a9/a9ca18429924890d2cb671010ae0ddf1.jpg'},
+            { title: 'Warrior King',image: 'https://static.bunnycdn.ru/i/cache/images/2/2a/2a069312c6dcc17030e79b04186b0826.jpg'},
+            { title: 'Never Say Never',image: 'https://static.bunnycdn.ru/i/cache/images/d/d5/d53de4aa5b8246e6e5af44c092a20b08.jpg'}
+        ];
+        var usMovies = [
+            { title: 'Wonka',image: 'https://static.bunnycdn.ru/i/cache/images/2/2d/2d9668ae8e22cd2b8bc6ece918a324a4.jpg'},
+            { title: 'The Marvels',image: 'https://static.bunnycdn.ru/i/cache/images/9/9b/9b3400db76e7e22b97635daec79c25ae.jpg'},
+            { title: 'Lift',image: 'https://static.bunnycdn.ru/i/cache/images/4/40/40c4ecbc8354d96fa43fda2aaa040e02.jpg'},
+            { title: 'Napoleon',image: 'https://static.bunnycdn.ru/i/cache/images/9/96/96e23d7dcf54ec4f1b54edf5a57b5486.jpg'},
+            { title: 'Aquaman',image: 'https://static.bunnycdn.ru/i/cache/images/a/a1/a177bb34968a3db9bb4ca5fb28e2e0be.jpg'},
+            { title: 'Oppenheimer',image: 'https://static.bunnycdn.ru/i/cache/images/0/04/04f7d5c5954f7c9c2e1313e0b34e4306.jpg'},
+            { title: 'Killers Of The Flower Moon',image: 'https://static.bunnycdn.ru/i/cache/images/f/f8/f8649e04b4160bb3b1fab4d10fa4a10a.jpg'},
+            { title: 'The Boys In The Boat',image: 'https://static.bunnycdn.ru/i/cache/images/e/e5/e553c5ec7eebe229a18e2d89951a8697.jpg'},
+            { title: 'The Beekeeper',image: 'https://static.bunnycdn.ru/i/cache/images/5/57/574ea42e26fdaf2c757386e7bc7402ed.jpg'}
+        ];
+
+        var currentVietnamIndex = 0;
+        var currentKoreaIndex = 0;
+        var currentChinaIndex = 0;
+        var currentUSIndex = 0;
+
+        var vietnamSearchResult = []; 
+        var koreaSearchResult = [];   
+        var chinaSearchResult = [];
+        var usSearchResult = [];
+
+        //Ham bo tro searchM
+        function filterAndRenderMovies(searchI, Xmovies, category) {
+            var searchResult = Xmovies.filter(movie => movie.title.toLowerCase().includes(searchI)); // cho input tim kiem
+            if (searchResult.length > 0) {
+                renderSearchResult(searchResult, category);
+            } else {
+                hideMovies(category);
+            }
+        }
+
+        function searchMovie() {
+            var searchI = document.getElementById('searchInput').value.toLowerCase();
+
+            filterAndRenderMovies(searchI, vietnamMovies, 'vietnamMovies');
+            filterAndRenderMovies(searchI, koreaMovies, 'koreaMovies');
+            filterAndRenderMovies(searchI, chinaMovies, 'chinaMovies');
+            filterAndRenderMovies(searchI, usMovies, 'usMovies');
+            
+            //var allSearchResults = [vietnamSearchResult, koreaSearchResult, chinaSearchResult, usSearchResult];
+        }
+
+        // an muc phim khong co phim chua tu khoa 
+        function hideMovies(category) {
+            var movieContainer = document.getElementById(category);
+            if (movieContainer) {
+                movieContainer.innerHTML = '';
+            }
+        }
+
+        function renderSearchResult(resultMovies, category) { // Phan biet = the loai, id ca 2 trung
+            var movieContainer;
+            // xac dinh dung vi tri tren giao dien
+            if (category === 'vietnamMovies') { 
+                movieContainer = document.getElementById('vietnamMovies');
+            } else if (category === 'koreaMovies') {
+                movieContainer = document.getElementById('koreaMovies');
+            } else if (category == 'chinaMovies'){
+                movieContainer = document.getElementById('chinaMovies');
+            } else if (category == 'usMovies'){
+                movieContainer = document.getElementById('usMovies');
+            }
+
+            if (movieContainer) {
+                movieContainer.innerHTML = '';
+                for (var i = 0; i < resultMovies.length; i++) {
+                    var movie = resultMovies[i];
+                    var movieCard = createMovieCard(movie);
+                    movieContainer.appendChild(movieCard);
+                }
+            }
+        }
+
+        function createMovieCard(movie) {
+            var movieCard = document.createElement('div');
+            movieCard.className = 'movieCard';
+
+            var movieImage = document.createElement('img');
+            movieImage.className = 'movieImage';
+            movieImage.src = movie.image; //
+            movieImage.alt = movie.title; // alt: chu thich anh khi anh k hien
+
+            var movieTitle = document.createElement('p');
+            movieTitle.className = 'movieTitle';
+            movieTitle.innerText = movie.title;
+
+            movieCard.appendChild(movieImage); // lk vao the div movieCard
+            movieCard.appendChild(movieTitle);
+
+            return movieCard;
+        }
+
+        function renderMovies(category, startIndex, resultMovies) {
+            var movieContainer = document.getElementById(category); //*
+            movieContainer.innerHTML = '';
+            var movies = resultMovies; 
+            
+            for (var i = startIndex; i < startIndex + 3 && i < movies.length; i++) {
+                var movie = movies[i];
+                var movieCard = createMovieCard(movie);
+                movieContainer.appendChild(movieCard); //lk vao div cha
+            }
+        }
+
+        function nextPage(category) {
+            var currentIndex;
+            var resultMovies;
+
+            if (category === 'vietnamMovies') {
+                currentIndex = currentVietnamIndex; // start at 0
+                resultMovies = vietnamSearchResult.length > 0 ? vietnamSearchResult : vietnamMovies; //chon mang
+                currentVietnamIndex += 3;                           
+            } else if (category === 'koreaMovies') {
+                currentIndex = currentKoreaIndex;
+                resultMovies = koreaSearchResult.length > 0 ? koreaSearchResult : koreaMovies;
+                currentKoreaIndex += 3;
+            } else if (category === 'chinaMovies') {
+                currentIndex = currentChinaIndex;
+                resultMovies = chinaSearchResult.length > 0 ? chinaSearchResult : chinaMovies;
+                currentChinaIndex += 3;
+            }
+            else if (category === 'usMovies') {
+                currentIndex = currentUSIndex;
+                resultMovies = usSearchResult.length > 0 ? usSearchResult : usMovies;
+                currentUSIndex += 3;
+            }
+
+            renderMovies(category, currentIndex, resultMovies);
+        }
+
+        function prevPage(category) {
+            var currentIndex;
+            var resultMovies;
+
+            if (category === 'vietnamMovies') {
+                currentIndex = currentVietnamIndex;
+                resultMovies = vietnamSearchResult.length > 0 ? vietnamSearchResult : vietnamMovies;
+                currentVietnamIndex = Math.max(0, currentVietnamIndex - 3); //index start: 0, 3, 6, 9,...
+            } else if (category === 'koreaMovies') {
+                currentIndex = currentKoreaIndex;
+                resultMovies = koreaSearchResult.length > 0 ? koreaSearchResult : koreaMovies;
+                currentKoreaIndex = Math.max(0, currentKoreaIndex - 3);
+            } else if (category === 'chinaMovies') {
+                currentIndex = currentChinaIndex;
+                resultMovies = chinaSearchResult.length > 0 ? chinaSearchResult : chinaMovies;
+                currentChinaIndex = Math.max(0, currentChinaIndex - 3);
+            }
+            else if (category === 'usMovies') {
+                currentIndex = currentUSIndex;
+                resultMovies = usSearchResult.length > 0 ? usSearchResult : usMovies;
+                currentUSIndex = Math.max(0, currentUSIndex - 3);
+            }
+
+            renderMovies(category, currentIndex, resultMovies);
+        }
+
+        // Load => hien thi 3 phim
+        renderMovies('vietnamMovies', currentVietnamIndex, vietnamMovies);
+        renderMovies('koreaMovies', currentKoreaIndex, koreaMovies);
+        renderMovies('chinaMovies', currentChinaIndex, chinaMovies);
+        renderMovies('usMovies', currentUSIndex, usMovies);
+
+        function giveFeedback() {
+            var feedback = document.querySelector('.feedback').value; //lay class 
+            if (feedback) {
+                alert("Cảm ơn bạn đã để lại ý kiến! Đội ngũ NooWeb sẽ xem xét và cải thiện trang web của mình.");
+
+                var notification = document.getElementById('notification');
+                notification.innerHTML = "Cảm ơn bạn vì đã gửi phản hồi. Đội ngũ NooWeb sẽ cố gắng hoàn thiện hơn trong tương lai.";
+                notification.style.display = 'block';
+            }
+        }
+
+        function showHotline() {
+            var hotlineNumber = "1900-2210"; 
+            alert("Số điện thoại hỗ trợ: " + hotlineNumber);
+        }
+
+        function closeHotline() {
+            var hotlineContainer = document.getElementById('hotline-container');
+            hotlineContainer.style.opacity = 0;
+            setTimeout(function() {
+                hotlineContainer.style.display = 'none';
+            }, 300); 
+        }
+        //doi bg
+        var backgrounds = [
+            'url("https://i.ytimg.com/vi/x0yN2dqhRs8/maxresdefault.jpg")',
+            'url("https://i.ytimg.com/vi/IgRJbN88l7E/maxresdefault.jpg")', 
+            'url("https://i.ytimg.com/vi/fNE3wgaHr18/maxresdefault.jpg")',
+            'url("https://i.ytimg.com/vi/s6CGTzYx5vE/maxresdefault.jpg")',
+            //'url("")'
+        ];
+        
+        var currentBackgroundIndex = 0;
+
+        function changeBackground() {
+            document.body.style.backgroundImage = backgrounds[currentBackgroundIndex];
+            currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
+        }
+
+        setInterval(changeBackground, 7000);
+    </script>
+</body>
+</html>
